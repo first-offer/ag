@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<title>Lander — GameNest</title>
+<meta name="description" content="GameNest entry page with age verification and direct access to the gaming hub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b1020; --card:#10162a; --ink:#e5e7eb; --muted:#94a3b8;
+    --brand:#22d3ee; --brand2:#8b5cf6; --ring:0 0 0 3px rgba(34,211,238,.25);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;
+    background:radial-gradient(1000px 600px at 10% -10%, rgba(139,92,246,.2), transparent 60%),
+               radial-gradient(800px 400px at 110% 10%, rgba(34,211,238,.15), transparent 60%),
+               var(--bg);
+    color:var(--ink); line-height:1.6;
+    display:flex; flex-direction:column; min-height:100vh;
+  }
+  a{color:var(--brand); text-decoration:none}
+  .wrap{max-width:960px; margin:0 auto; padding:0 20px}
+  header{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:18px 24px;
+    border-bottom:1px solid rgba(148,163,184,.13);
+    backdrop-filter:saturate(120%) blur(4px);
+  }
+  .logo{display:flex; align-items:center; gap:12px}
+  .logo img{height:40px; width:auto}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:12px 16px; border-radius:999px;
+    background:linear-gradient(90deg,var(--brand),var(--brand2));
+    color:#081224; font-weight:700; border:0; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow:var(--ring)}
+  .ghost{background:transparent; color:var(--ink); border:1px solid rgba(148,163,184,.25)}
+  main{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:60px 20px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid rgba(148,163,184,.15);
+    border-radius:16px;
+    padding:40px 28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    max-width:480px;
+    width:100%;
+  }
+  h1{font-size:clamp(32px,5vw,48px); line-height:1.1; margin:0 0 12px}
+  p{color:var(--muted); margin:0 0 20px}
+  .foot{border-top:1px solid rgba(148,163,184,.13); padding:26px 20px; color:var(--muted); text-align:center}
+</style>
+
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+
+  <!-- ✅ Unified GameNest header -->
+  <header class="wrap">
+    <div class="logo">
+      <img src="assets/img/gamenest-logo.svg" alt="GameNest logo">
+      <strong>GameNest</strong>
+    </div>
+    <nav style="display:flex;gap:14px">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="index.html#play">Play Now</a>
+  </header>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: url("paste img link") no-repeat center center;
+    background-size: cover;
+  }
+ 
+  /* Mobile (max 600px) */
+  @media (max-width: 600px) {
+    body {
+      background-image: url("paste img link");
+    }
+  }
+ 
+  /* Tablet (601px – 1024px) */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    body {
+      background-image: url("Paste img link");
+    }
+  }
+ 
+  /* Desktop (above 1024px) */
+  @media (min-width: 1025px) {
+    body {
+      background-image: url("paste img link");
+    }
+  }
+</style>
+ 
+ 
+  <footer class="foot">
+    © <span id="y"></span> GameNest · Play, Compete, Connect.
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+  <script src="../assets/js/popup.js" defer></script>
+</body>
+</html>

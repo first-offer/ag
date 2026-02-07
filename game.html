@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<title>Play — Pong | GameNest</title>
+<meta name="description" content="Play Pong on GameNest — a fast, responsive canvas game. Use Arrow keys to move. First to 7 wins.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b1020; --card:#10162a; --ink:#e5e7eb; --muted:#94a3b8;
+    --brand:#22d3ee; --brand2:#8b5cf6; --ring:0 0 0 3px rgba(34,211,238,.25);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.2), transparent 60%),
+      radial-gradient(800px 400px at 110% 10%, rgba(34,211,238,.15), transparent 60%),
+      var(--bg);
+    color:var(--ink); line-height:1.6;
+  }
+  a{color:var(--brand); text-decoration:none}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+  /* Header */
+  header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 24px;
+         border-bottom:1px solid rgba(148,163,184,.13); backdrop-filter:saturate(120%) blur(4px)}
+  .logo{display:flex; align-items:center; gap:12px}
+  .logo img{height:40px; width:auto}
+  .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
+       background:linear-gradient(90deg,var(--brand),var(--brand2)); color:#081224; font-weight:700; border:0; cursor:pointer;
+       transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px); box-shadow:var(--ring)}
+  .ghost{background:transparent; color:var(--ink); border:1px solid rgba(148,163,184,.25)}
+  /* Hero */
+  .hero{padding:34px 0 6px}
+  .hero h1{font-size:clamp(28px,5vw,44px); line-height:1.06; margin:0 0 6px; letter-spacing:-.02em}
+  .hero p{margin:0; color:var(--muted)}
+  /* Canvas wrapper */
+  .stage{padding:18px 0 40px}
+  .canvas-shell{
+    margin:18px auto 10px;
+    width:min(92vw, 900px);
+    aspect-ratio: 16/10;
+    background:#1b1f29;
+    border-radius:12px;
+    border:1px solid rgba(148,163,184,.15);
+    position:relative;
+    overflow:hidden;
+  }
+  canvas{display:block; width:100%; height:100%}
+  .hud{
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;
+    margin:8px 0 0;
+  }
+  .hint{color:var(--muted); font-size:14px}
+  .foot{border-top:1px solid rgba(148,163,184,.13); padding:26px 20px; color:var(--muted); text-align:center}
+</style>
+
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+
+  <!-- ✅ Unified header -->
+  <header class="wrap">
+    <div class="logo">
+      <img src="assets/img/gamenest-logo.svg" alt="GameNest logo"><strong>GameNest</strong>
+    </div>
+    <nav style="display:flex;gap:14px">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="#play">Play Now</a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1 id="play">Pong</h1>
+      <p>Move with <b>Arrow Up/Down</b>. First to <b>7</b> wins. Press <b>R</b> to restart.</p>
+    </section>
+
+    <section class="stage">
+      <div class="canvas-shell">
+        <canvas id="pong" width="800" height="500" aria-label="Pong game area"></canvas>
+      </div>
+      <div class="hud">
+        <button class="btn ghost" id="restartBtn" type="button">Restart (R)</button>
+        <span class="hint">Tip: On mobile, rotate to landscape for better controls.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    © <span id="y"></span> GameNest · Play, Compete, Connect.
+  </footer>
+
+<script>
+/* Retina-sharp, responsive Pong */
+(() => {
+  const canvas = document.getElementById('pong');
+  const ctx = canvas.getContext('2d');
+
+  // Base logical size (will be scaled for devicePixelRatio)
+  const BASE_W = 800, BASE_H = 500;
+
+  function fitToContainer() {
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    // keep logical size, but scale internal resolution for sharpness
+    canvas.width  = Math.floor(BASE_W * dpr);
+    canvas.height = Math.floor(BASE_H * dpr);
+    canvas.style.width  = '100%';
+    canvas.style.height = '100%';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // draw with logical coords
+  }
+  fitToContainer();
+  window.addEventListener('resize', fitToContainer);
+
+  // Game state (logical coords)
+  const W = BASE_W, H = BASE_H;
+  const player = {x:20, y:H/2-40, w:12, h:80, score:0, dy:0};
+  const ai     = {x:W-32, y:H/2-40, w:12, h:80, score:0};
+  const ball   = {x:W/2, y:H/2, r:8, dx:5, dy:3};
+  let running = true;
+
+  function drawRect(x,y,w,h,color){ctx.fillStyle=color; ctx.fillRect(x,y,w,h);}
+  function drawCircle(x,y,r,color){ctx.fillStyle=color; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();}
+  function drawText(txt,x,y,size=24,align='left'){ctx.fillStyle="#fff"; ctx.font=`${size}px Inter`; ctx.textAlign=align; ctx.fillText(txt,x,y);}
+
+  function resetBall(){
+    ball.x=W/2; ball.y=H/2;
+    ball.dx *= -1;
+    ball.dy = (Math.random()>.5?1:-1) * (3 + Math.random()*1.5);
+  }
+  function resetMatch(){
+    player.score = 0; ai.score = 0;
+    player.y = H/2 - player.h/2; ai.y = H/2 - ai.h/2;
+    ball.x=W/2; ball.y=H/2; ball.dx=5; ball.dy=3;
+    running = true;
+    loop();
+  }
+
+  function update(){
+    // player
+    player.y += player.dy;
+    if(player.y<0) player.y=0;
+    if(player.y+player.h>H) player.y=H-player.h;
+
+    // AI tracks ball with easing
+    const target = ball.y - ai.h/2;
+    ai.y += (target - ai.y) * 0.08;
+    ai.y = Math.max(0, Math.min(H - ai.h, ai.y));
+
+    // ball
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+
+    // top/bottom bounce
+    if(ball.y-ball.r<0 || ball.y+ball.r>H) ball.dy *= -1;
+
+    // paddle collisions
+    // player
+    if (ball.x-ball.r < player.x+player.w && ball.y > player.y && ball.y < player.y+player.h) {
+      ball.dx = Math.abs(ball.dx) * 1.03; // speed up slightly
+      const offset = (ball.y - (player.y + player.h/2)) / (player.h/2);
+      ball.dy = 4 * offset;
+      ball.x = player.x + player.w + ball.r;
+    }
+    // AI
+    if (ball.x+ball.r > ai.x && ball.y > ai.y && ball.y < ai.y+ai.h) {
+      ball.dx = -Math.abs(ball.dx) * 1.03;
+      const offset = (ball.y - (ai.y + ai.h/2)) / (ai.h/2);
+      ball.dy = 4 * offset;
+      ball.x = ai.x - ball.r;
+    }
+
+    // scoring
+    if (ball.x < 0) { ai.score++; resetBall(); }
+    if (ball.x > W) { player.score++; resetBall(); }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    drawRect(0,0,W,H,"#1b1f29");
+    // mid line
+    drawRect(W/2-1,0,2,H,"#2f3542");
+    // scores
+    drawText(player.score, W/2-60, 44, 28, 'right');
+    drawText(ai.score, W/2+60, 44, 28, 'left');
+    // paddles + ball
+    drawRect(player.x, player.y, player.w, player.h, "#3B82F6");
+    drawRect(ai.x,     ai.y,     ai.w,     ai.h,     "#EF4444");
+    drawCircle(ball.x, ball.y, ball.r, "#fff");
+  }
+
+  function loop(){
+    if(!running) return;
+    update();
+    draw();
+    if(player.score<7 && ai.score<7){
+      requestAnimationFrame(loop);
+    } else {
+      running = false;
+      ctx.fillStyle = "#fff";
+      ctx.font = "28px Inter";
+      ctx.textAlign = "center";
+      ctx.fillText(`${player.score===7 ? 'You win!' : 'Computer wins!'}`, W/2, H/2);
+      ctx.textAlign = "center";
+      ctx.fillText(`Press R or click Restart`, W/2, H/2 + 36);
+    }
+  }
+  loop();
+
+  // Keyboard controls
+  window.addEventListener('keydown', e => {
+    if(e.key==="ArrowUp") player.dy = -6;
+    if(e.key==="ArrowDown") player.dy = 6;
+    if(e.key==="r" || e.key==="R") resetMatch();
+  });
+  window.addEventListener('keyup', e => {
+    if(e.key==="ArrowUp" || e.key==="ArrowDown") player.dy = 0;
+  });
+
+  // Restart button
+  document.getElementById('restartBtn').addEventListener('click', resetMatch);
+})();
+</script>
+
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

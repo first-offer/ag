@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<title>Contact — GameNest</title>
+<meta name="description" content="Contact GameNest: ask questions, collaborate, or get support for your gaming experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b1020; --card:#10162a; --ink:#e5e7eb; --muted:#94a3b8;
+    --brand:#22d3ee; --brand2:#8b5cf6; --ring:0 0 0 3px rgba(34,211,238,.25);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.2), transparent 60%),
+               radial-gradient(800px 400px at 110% 10%, rgba(34,211,238,.15), transparent 60%),
+               var(--bg);
+    color:var(--ink); line-height:1.65;
+  }
+  a{color:var(--brand); text-decoration:none}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+  header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 24px;
+         border-bottom:1px solid rgba(148,163,184,.13); backdrop-filter:saturate(120%) blur(4px)}
+  .logo{display:flex; align-items:center; gap:12px}
+  .logo img{height:40px; width:auto}
+  .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
+       background:linear-gradient(90deg,var(--brand),var(--brand2)); color:#081224; font-weight:700; border:0; cursor:pointer;
+       transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px); box-shadow:var(--ring)}
+  .hero{padding:42px 0 10px}
+  .hero h1{font-size:clamp(32px,5vw,48px); line-height:1.06; margin:0 0 6px; letter-spacing:-.02em}
+  .hero p{margin:0; color:var(--muted)}
+  form{display:grid; gap:18px; margin:26px 0 36px}
+  input, textarea{
+    width:100%; padding:12px 14px; border-radius:8px;
+    border:1px solid rgba(148,163,184,.25); background:var(--card); color:var(--ink);
+    font-size:16px; resize:vertical;
+  }
+  input:focus, textarea:focus{outline:none; border-color:var(--brand); box-shadow:var(--ring)}
+  textarea{min-height:120px}
+  .card{background:var(--card); border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:20px; margin-top:20px}
+  .muted{color:var(--muted)}
+  .map{
+    width:100%; height:300px; border-radius:12px; border:0;
+    background:rgba(34,211,238,.1) url('https://via.placeholder.com/800x300?text=Map+Placeholder') center/cover no-repeat;
+    margin-top:16px;
+  }
+  .foot{border-top:1px solid rgba(148,163,184,.13); padding:26px 20px; color:var(--muted); text-align:center}
+</style>
+
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+
+  <!-- ✅ Shared Header -->
+  <header class="wrap">
+    <div class="logo">
+      <img src="assets/img/gamenest-logo.svg" alt="GameNest logo">
+      <strong>GameNest</strong>
+    </div>
+    <nav style="display:flex;gap:14px">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <a class="btn" href="index.html#play">Play Now</a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Contact Us</h1>
+      <p>We’d love to hear from you — questions, feedback, or partnership ideas.</p>
+    </section>
+
+    <section>
+      <form id="contactForm">
+        <div>
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+
+      <div class="card">
+        <h3>Other Ways to Connect</h3>
+        <p class="muted">
+          📧 Email: <a href="mailto:support@gamenest.com">support@gamenest.com</a><br>
+          🕒 Response Time: within 24–48 hours<br>
+          📍 Location: Remote-first team, available globally
+        </p>
+      </div>
+
+      <div class="map" title="Map placeholder"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    © <span id="y"></span> GameNest · Play, Compete, Connect.
+  </footer>
+
+  <script>
+    // simple handler for demonstration
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you for reaching out! Your message has been received.');
+      e.target.reset();
+    });
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GameNest — Play, Compete, Connect</title>
+<meta name="description" content="GameNest is your modern hub for fast, lightweight browser games. Play instantly, compete on leaderboards, and connect with your squad.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:#10162a;
+    --ink:#e5e7eb;
+    --muted:#94a3b8;
+    --brand:#22d3ee;
+    --brand2:#8b5cf6;
+    --ring: 0 0 0 3px rgba(34,211,238,.25);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.2), transparent 60%),radial-gradient(800px 400px at 110% 10%, rgba(34,211,238,.15), transparent 60%), var(--bg);color:var(--ink);line-height:1.6}
+  a{color:var(--brand);text-decoration:none}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(148,163,184,.13);backdrop-filter:saturate(120%) blur(4px)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo img{height:40px;width:auto}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#081224;font-weight:700;border:0;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px);box-shadow:var(--ring)}
+  .ghost{background:transparent;color:var(--ink);border:1px solid rgba(148,163,184,.25)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:48px 0}
+  .hero h1{font-size:clamp(32px,5vw,56px);line-height:1.05;margin:8px 0 14px;font-weight:900;letter-spacing:-.02em}
+  .hero p{font-size:clamp(16px,2.4vw,18px);color:var(--muted);margin:0 0 18px}
+  .hero-card{background:linear-gradient(180deg,rgba(16,22,42,.8),rgba(16,22,42,.6));border:1px solid rgba(148,163,184,.15);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(34,211,238,.35);color:var(--brand);border-radius:999px;padding:6px 10px;font-weight:700;background:rgba(34,211,238,.08)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 8px}
+  .card{background:var(--card);border:1px solid rgba(148,163,184,.15);border-radius:16px;padding:18px}
+  .card h3{margin:4px 0 6px;font-size:18px}
+  .muted{color:var(--muted)}
+  .list{display:grid;gap:10px;margin:12px 0}
+  .foot{border-top:1px solid rgba(148,163,184,.13);padding:26px 20px;color:var(--muted);text-align:center}
+  @media (max-width:920px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+
+  <!-- ✅ Keep ONLY this header -->
+  <header class="wrap">
+    <div class="logo">
+      <img src="assets/img/gamenest-logo.svg" alt="GameNest logo" />
+      <strong>GameNest</strong>
+    </div>
+    <nav style="display:flex;gap:14px">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="game.html">Play Now</a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="pill">⚡ Instant Play • No Installs</span>
+        <h1>Welcome to GameNest — <br/>your hub to <span style="background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent">Play, Compete, Connect</span>.</h1>
+        <p>GameNest delivers fast, lightweight web games that load in a blink. Explore curated titles, climb leaderboards, and challenge your friends — all inside the browser.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+          <a class="btn" href="#featured">Explore Featured</a>
+          <a class="btn ghost" href="about.html">What is GameNest?</a>
+        </div>
+        <ul class="list muted">
+          <li>✅ Optimized for mobile, tablet, and desktop</li>
+          <li>✅ Zero friction: click and play</li>
+          <li>✅ Community leaderboards & fair scoring</li>
+        </ul>
+      </div>
+      <div class="hero-card">
+        <img src="assets/img/gamenest-logo.svg" alt="GameNest emblem" style="width:100%;max-width:320px;display:block;margin:0 auto 8px" />
+        <p class="muted" style="text-align:center;margin:0">A clean, neon aesthetic that keeps the focus on gameplay.</p>
+      </div>
+    </section>
+
+    <section id="featured">
+      <h2 style="font-size:22px;margin:0 0 12px">Featured Games</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Neon Runner</h3>
+          <p class="muted">Dodge obstacles, collect shards, and sprint to the finish in an endless synthwave city. Simple controls, deep mastery.</p>
+        </div>
+        <div class="card">
+          <h3>Orbital Stack</h3>
+          <p class="muted">Stack rotating rings with perfect timing. Smooth animations and a global leaderboard keep you hooked.</p>
+        </div>
+        <div class="card">
+          <h3>Pixel Duel</h3>
+          <p class="muted">One‑tap arena battles. Quick matches, tight hitboxes, and competitive matchmaking.</p>
+        </div>
+      </div>
+      <a class="btn" href="#play">Play Featured</a>
+    </section>
+
+    <section id="why" style="margin-top:34px">
+      <h2 style="font-size:22px;margin:0 0 12px">Why GameNest?</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Lightning Fast</h3>
+          <p class="muted">Lean assets, CDN delivery, and performance budgets ensure instant gameplay.</p>
+        </div>
+        <div class="card">
+          <h3>Fair Leaderboards</h3>
+          <p class="muted">Anti‑cheat checks and verifiable scoring make competition meaningful.</p>
+        </div>
+        <div class="card">
+          <h3>Built for All Screens</h3>
+          <p class="muted">Responsive layouts and touch‑friendly UI so you can play anywhere.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    © <span id="y"></span> GameNest · Play, Compete, Connect
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+<script src="../assets/js/popup.js" defer></script>
+</body>
+</html>
